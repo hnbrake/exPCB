@@ -92,17 +92,27 @@ src/
 
 ---
 
-## Deploying (e.g. Netlify)
+## Deploying on Netlify
 
-This is a **single-page app**: all routes are handled by the client. Configure your host to **rewrite** unknown paths to `index.html` (Netlify: `_redirects` with `/* /index.html 200` or equivalent).
+This repo includes **`netlify.toml`** (build command, `publish = dist`, Node 20, SPA redirect) and **`public/_redirects`** (copied into `dist` as a fallback).
 
-Typical build settings:
+### Connect Git (recommended)
 
-| Setting | Value |
-|--------|--------|
-| Build command | `npm run build` |
-| Publish directory | `dist` |
-| Node version | 20.x (or match your local) |
+1. Push this repo to GitHub (or GitLab / Bitbucket).
+2. In [Netlify](https://app.netlify.com) → **Add new site** → **Import an existing project**.
+3. Pick the repo and leave settings as inferred from `netlify.toml` (or set **Build command** `npm run build`, **Publish directory** `dist`).
+4. Deploy. Deep links like `/fpga/fabric` work because of the **200 rewrite** to `index.html`.
+
+### CLI (optional)
+
+With [Netlify CLI](https://docs.netlify.com/cli/get-started/) installed and logged in:
+
+```bash
+npm run build
+npx netlify deploy --prod --dir=dist
+```
+
+For Git-based sites, prefer the dashboard so every push rebuilds automatically.
 
 ---
 
