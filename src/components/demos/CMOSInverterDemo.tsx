@@ -30,50 +30,70 @@ export function CMOSInverterDemo() {
         </span>
       </div>
 
-      <svg viewBox="0 0 320 200" width="100%" style={{ maxWidth: 420, borderRadius: 14, background: 'var(--chart-bg)' }}>
-        <rect x="10" y="10" width="300" height="180" rx="12" fill="var(--bg-elevated)" stroke="var(--border)" />
+      <svg
+        viewBox="0 0 400 248"
+        width="100%"
+        style={{ maxWidth: 480, borderRadius: 14, background: 'var(--chart-bg)' }}
+      >
+        <rect x="8" y="8" width="384" height="208" rx="12" fill="var(--bg-elevated)" stroke="var(--border)" />
 
-        <text x="160" y="32" textAnchor="middle" fill="var(--text-muted)" fontSize="12" fontWeight="600">
+        <text x="200" y="30" textAnchor="middle" fill="var(--text-muted)" fontSize="12" fontWeight="600">
           CMOS inverter (symbolic)
         </text>
 
-        <line x1="160" y1="40" x2="160" y2="170" stroke="var(--text-faint)" strokeWidth="1" />
-
-        <text x="24" y="58" fill="#e5e5e5" fontSize="11" fontFamily="var(--font-mono)">
+        {/* VDD rail */}
+        <text x="22" y="52" fill="#e5e5e5" fontSize="11" fontFamily="var(--font-mono)">
           VDD
         </text>
-        <line x1="60" y1="54" x2="120" y2="54" stroke="#e5e5e5" strokeWidth="2" />
-        <line x1="120" y1="54" x2="120" y2="78" stroke="#e5e5e5" strokeWidth="2" />
+        <path d="M 72 48 H 200 V 58" fill="none" stroke="#e5e5e5" strokeWidth="2" strokeLinecap="round" />
 
-        <text x="24" y="178" fill="#737373" fontSize="11" fontFamily="var(--font-mono)">
+        {/* Output node (between drains) — cy sits in the gap between p and n */}
+        <path
+          d="M 200 94 V 109 V 124"
+          fill="none"
+          stroke="var(--text-muted)"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <circle cx="200" cy="109" r="5" fill="var(--text)" />
+
+        {/* GND rail */}
+        <path d="M 200 160 V 186 H 72" fill="none" stroke="#737373" strokeWidth="2" strokeLinecap="round" />
+        <text x="22" y="190" fill="#737373" fontSize="11" fontFamily="var(--font-mono)">
           GND
         </text>
-        <line x1="60" y1="174" x2="120" y2="174" stroke="#737373" strokeWidth="2" />
-        <line x1="120" y1="150" x2="120" y2="174" stroke="#737373" strokeWidth="2" />
 
-        <PMOS x={120} y={78} on={vinHigh === false} />
-        <NMOS x={120} y={120} on={vinHigh === true} />
+        <PMOS x={168} y={58} on={vinHigh === false} />
+        <NMOS x={168} y={124} on={vinHigh === true} />
 
-        <line x1="40" y1="120" x2="88" y2="120" stroke="var(--accent)" strokeWidth="2" />
-        <text x="24" y="124" fill="var(--text-muted)" fontSize="10" fontFamily="var(--font-mono)">
+        {/* Input: horizontal stub + vertical gate bus (clears transistor bodies) */}
+        <path
+          d="M 28 109 H 118 V 76 H 168 M 118 109 V 142 H 168"
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <text x="22" y="106" fill="var(--text-muted)" fontSize="10" fontFamily="var(--font-mono)">
           in
         </text>
 
+        {/* Output */}
         <line
-          x1="200"
-          y1="100"
-          x2="260"
-          y2="100"
+          x1="232"
+          y1="109"
+          x2="348"
+          y2="109"
           stroke={voutHigh ? 'var(--chart-series)' : 'var(--text-muted)'}
           strokeWidth="3"
+          strokeLinecap="round"
         />
-        <text x="268" y="104" fill="var(--text-muted)" fontSize="10" fontFamily="var(--font-mono)">
+        <text x="356" y="113" fill="var(--text-muted)" fontSize="10" fontFamily="var(--font-mono)">
           out
         </text>
 
-        <circle cx="160" cy="100" r="5" fill="var(--text)" />
-
-        <text x="160" y="192" textAnchor="middle" fill="var(--text-faint)" fontSize="9">
+        <text x="200" y="236" textAnchor="middle" fill="var(--text-faint)" fontSize="9">
           p off when in high · n off when in low (steady state)
         </text>
       </svg>
@@ -87,14 +107,17 @@ function PMOS({ x, y, on }: { x: number; y: number; on: boolean }) {
       <rect
         x="0"
         y="0"
-        width="80"
+        width="64"
         height="36"
         rx="6"
         fill="rgba(255, 255, 255, 0.08)"
         stroke="#d4d4d4"
       />
-      <text x="40" y="22" textAnchor="middle" fill="var(--text)" fontSize="11" fontWeight="600">
-        pMOS {on ? 'ON' : 'OFF'}
+      <text x="32" y="15" textAnchor="middle" fill="var(--text)" fontSize="9" fontWeight="700">
+        pMOS
+      </text>
+      <text x="32" y="28" textAnchor="middle" fill="var(--text-muted)" fontSize="9" fontWeight="600">
+        {on ? 'ON' : 'OFF'}
       </text>
     </g>
   )
@@ -106,14 +129,17 @@ function NMOS({ x, y, on }: { x: number; y: number; on: boolean }) {
       <rect
         x="0"
         y="0"
-        width="80"
+        width="64"
         height="36"
         rx="6"
         fill="rgba(255, 255, 255, 0.04)"
         stroke="#737373"
       />
-      <text x="40" y="22" textAnchor="middle" fill="var(--text)" fontSize="11" fontWeight="600">
-        nMOS {on ? 'ON' : 'OFF'}
+      <text x="32" y="15" textAnchor="middle" fill="var(--text)" fontSize="9" fontWeight="700">
+        nMOS
+      </text>
+      <text x="32" y="28" textAnchor="middle" fill="var(--text-muted)" fontSize="9" fontWeight="600">
+        {on ? 'ON' : 'OFF'}
       </text>
     </g>
   )

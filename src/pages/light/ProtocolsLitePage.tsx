@@ -129,31 +129,42 @@ export function ProtocolsLitePage() {
           Conceptual SPI timing (mode 0-ish, not to scale) — note how MOSI is sampled on clock edges while{' '}
           <strong>/CS</strong> frames the transaction:
         </p>
-        <svg viewBox="0 0 360 120" width="100%" style={{ maxHeight: 140 }} aria-hidden>
-          <text x="8" y="14" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
+        <svg viewBox="0 0 448 168" width="100%" style={{ maxHeight: 200 }} aria-hidden>
+          <text x="4" y="20" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
             SCLK
           </text>
           <polyline
             fill="none"
             stroke="var(--chart-series)"
             strokeWidth="2"
-            points="8,28 24,28 24,44 40,44 40,28 56,28 56,44 72,44 72,28 88,28 88,44 104,44 104,28 120,28 120,44 136,44 136,28 152,28 152,44 168,44 168,28 184,28 184,44 200,44 200,28 216,28 216,44 232,44 232,28 248,28 248,44 264,44 264,28 280,28 280,44 296,44 296,28 312,28 312,44 328,44 328,28 344,28"
+            strokeLinejoin="round"
+            points="76,30 96,30 96,46 116,46 116,30 136,30 136,46 156,46 156,30 176,30 176,46 196,46 196,30 216,30 216,46 236,46 236,30 256,30 256,46 276,46 276,30 296,30 296,46 316,46 316,30 336,30 336,46 356,46 356,30 376,30 376,46 396,46 396,30 416,30 416,46 436,46"
           />
-          <text x="8" y="64" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
+          <line x1="72" y1="54" x2="440" y2="54" stroke="var(--border)" strokeWidth="1" strokeDasharray="4 6" opacity="0.5" />
+
+          <text x="4" y="78" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
             MOSI
           </text>
           <polyline
             fill="none"
             stroke="var(--text-muted)"
             strokeWidth="2"
-            points="8,78 56,78 56,94 104,94 104,78 152,78 152,110 200,110 200,78 248,78 248,94 296,94 296,78 344,78"
+            strokeLinejoin="round"
+            points="76,88 136,88 136,104 156,104 156,88 216,88 216,104 236,104 236,88 296,88 296,104 316,104 316,88 376,88 376,104 396,104 396,88 436,88"
           />
-          <text x="8" y="118" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
+          <line x1="72" y1="110" x2="440" y2="110" stroke="var(--border)" strokeWidth="1" strokeDasharray="4 6" opacity="0.5" />
+
+          <text x="4" y="138" fill="var(--text-faint)" fontSize="10" fontFamily="var(--font-mono)">
             /CS
           </text>
-          <line x1="8" y1="112" x2="40" y2="112" stroke="var(--text-muted)" strokeWidth="3" />
-          <line x1="40" y1="118" x2="200" y2="118" stroke="var(--text-muted)" strokeWidth="3" />
-          <line x1="200" y1="112" x2="232" y2="112" stroke="var(--text-muted)" strokeWidth="3" />
+          <path
+            d="M 76 132 L 104 132 L 104 152 L 328 152 L 328 132 L 436 132"
+            fill="none"
+            stroke="var(--text-muted)"
+            strokeWidth="3"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
         </svg>
       </div>
 

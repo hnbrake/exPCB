@@ -31,6 +31,10 @@ export function Layout() {
     document.documentElement.dataset.expcbTheme = theme
   }, [theme])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [pathname])
+
   return (
     <div className="layout">
       <ScrollProgressBar />
@@ -72,7 +76,7 @@ export function Layout() {
             <PcbFooterIllustration />
           </div>
           <p className="layout__footer-copy">
-            Conceptual demos — not SPICE-accurate. Good for the bus.
+            Conceptual demos — not SPICE-accurate. Good for the morning bus ride.
             <span className="emoji-after" aria-hidden>
               🚌
             </span>
