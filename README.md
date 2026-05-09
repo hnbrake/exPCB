@@ -1,73 +1,126 @@
-# React + TypeScript + Vite
+# exPCB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Interactive electronics intuition** — FPGAs, memory, circuits, power, and buses explained with diagrams, short reads, and demos you can actually poke at.
 
-Currently, two official plugins are available:
+> Not a SPICE replacement. Built for the mental model you carry from the couch to the bench.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Why this exists
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+exPCB connects **datasheet vocabulary** to **motion and pictures**: LUTs and bitstreams, SRAM vs flash, MOSFET curves, LDOs vs bucks, SPI/I²C/JTAG — each area mixes prose with something draggable, tappable, or slidable. Several chapters end with **Sources** boxes that point at manuals, standards, and vendor notes (IEEE, JEDEC, architecture guides, and more).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Highlights
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| | |
+|---|---|
+| **Learning trail** | Suggested read order with step dots and prev/next navigation |
+| **Route theming** | Per-track accent colors on FPGA, Memory, Circuits, Power, Protocols |
+| **Ink aesthetic** | Shared dark “ink” palette on interior pages, footer, and trail |
+| **Attribution** | Wikimedia / Commons figures with license links where used |
+| **Accessible motion** | Scroll reveals respect `prefers-reduced-motion` |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech stack
+
+- **React 19** + **TypeScript**
+- **Vite 8** (build + dev server)
+- **React Router 7** (client-side routing)
+- **ESLint** (flat config)
+
+---
+
+## Quick start
+
+**Requirements:** Node.js **20+** (or current LTS) and npm.
+
+```bash
+# install dependencies
+npm install
+
+# dev server (http://localhost:5173)
+npm run dev
+
+# production build → ./dist
+npm run build
+
+# preview the production build locally
+npm run preview
+
+# lint
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Site map
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Path | What you’ll find |
+|------|------------------|
+| `/` | Home — tracks overview, hero art, dark “tail” sections |
+| `/fpga` | FPGA hub |
+| `/fpga/fabric` | Programmable fabric, PLL/SerDes context |
+| `/fpga/system` | Guided system builder demo |
+| `/fpga/soc` | SoC vs FPGA vs MPU angles |
+| `/memory` | Memory hub |
+| `/memory/deep` | Deeper memory tiers copy |
+| `/memory/match` | Drag-and-match lab |
+| `/circuits` | Circuits hub |
+| `/circuits/mosfet` | MOSFET playground |
+| `/circuits/cmos` | CMOS inverter demo |
+| `/circuits/passives` | Passives explorer |
+| `/light/power` | Power path (LDO vs switcher, decoupling) |
+| `/light/protocols` | SPI, I²C, JTAG at a glance |
+
+---
+
+## Project layout (sketch)
+
+```text
+public/           # static assets, diagram SVGs, favicon
+src/
+  App.tsx         # route table
+  main.tsx        # entry
+  index.css       # global + theme + layout
+  components/     # layout, demos, diagrams, art, UI primitives
+  pages/          # Home + hubs and deep pages by area
+  content/        # learning path + reference metadata
 ```
+
+---
+
+## Deploying (e.g. Netlify)
+
+This is a **single-page app**: all routes are handled by the client. Configure your host to **rewrite** unknown paths to `index.html` (Netlify: `_redirects` with `/* /index.html 200` or equivalent).
+
+Typical build settings:
+
+| Setting | Value |
+|--------|--------|
+| Build command | `npm run build` |
+| Publish directory | `dist` |
+| Node version | 20.x (or match your local) |
+
+---
+
+## License & credits
+
+- **Application code** in this repo: treat as your project license once you add one (e.g. MIT) if you open-source it.
+- **Third-party diagrams** (e.g. on Commons) keep their **CC-BY / CC0** terms — see on-page **Image:** credit lines and links.
+
+---
+
+## Contributing / editing
+
+- Content and copy live mostly under `src/pages/` and `src/content/`.
+- Visual system: CSS variables and `data-expcb-theme` on `<html>` (set from the router in `Layout.tsx`).
+- After substantive style or route changes, run `npm run build` to confirm TypeScript and Vite both pass.
+
+---
+
+<p align="center">
+  <strong>exPCB</strong> · learn · build intuition · <em>🧩</em>
+</p>
